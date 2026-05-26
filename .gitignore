@@ -1,0 +1,23 @@
+# Uploaded files - do not commit to GitHub
+uploads/gallery/*
+uploads/forms/*
+
+# Keep the folder structure but not the files
+!uploads/gallery/.gitkeep
+!uploads/forms/.gitkeep
+
+# Sensitive config - never commit real credentials
+# includes/config.php  (keep this commented unless you add a config.example.php)
+
+# Temporary files
+reset_admin.php
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Claude Code local settings
+.claude/
