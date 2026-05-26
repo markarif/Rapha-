@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require_once 'includes/config.php';
 $pageTitle = "Contact Us";
 $pageDesc  = "Get in touch with Rapha Garden School in Athi River, Machakos County, Kenya.";
@@ -96,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="flash flash-<?= $flash['type'] ?>"><?= $flash['message'] ?></div>
         <?php endif; ?>
 
-        <form method="POST" action="contact.php">
+        <form method="POST" action="/contact">
           <div class="grid-2" style="gap:1rem;">
             <div class="form-group">
               <label for="name">Full Name *</label>
