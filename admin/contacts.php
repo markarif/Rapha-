@@ -3,13 +3,23 @@ require_once '../includes/config.php';
 requireAdmin();
 
 // Delete
-if (isset($_GET['delete'])) {
+if (isset($_GET['delete']) && $pdo) {
     $pdo->prepare("DELETE FROM contacts WHERE id=?")->execute([intval($_GET['delete'])]);
     flashSet('success', 'Message deleted.');
     redirect('/admin/contacts.php');
 }
 
-$messages = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC")->fetchAll();
+$messages = [];
+$dbError  = null;
+if (!$pdo) {
+    $dbError = 'Database connection unavailable. Check config.php credentials.';
+} else {
+    try {
+        $messages = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC")->fetchAll();
+    } catch (Exception $e) {
+        $dbError = 'Could not load messages: ' . $e->getMessage();
+    }
+}
 $flash    = flashGet();
 ?>
 <!DOCTYPE html>
@@ -30,6 +40,10 @@ $flash    = flashGet();
 
   <?php if ($flash): ?>
   <div class="flash flash-<?= $flash['type'] ?>"><?= sanitize($flash['message']) ?></div>
+  <?php endif; ?>
+
+  <?php if ($dbError): ?>
+  <div class="flash flash-error"><?= htmlspecialchars($dbError) ?></div>
   <?php endif; ?>
 
   <div class="admin-card">
