@@ -80,7 +80,11 @@ $statusColors = [
     <?php if ($viewId): ?>
     <a href="/admin/applications.php" style="color:var(--gray-600);font-size:0.88rem;">← Back to list</a>
     <?php else: ?>
-    <span style="color:var(--gray-600);font-size:0.88rem;"><?= $counts['all'] ?> total</span>
+    <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;">
+      <span style="color:var(--gray-600);font-size:0.88rem;"><?= $counts['all'] ?> total</span>
+      <a href="/admin/export.php?type=applications&format=csv" class="btn-sm" style="background:#2e7d32;color:#fff;padding:0.35rem 0.9rem;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">⬇ CSV</a>
+      <a href="/admin/export.php?type=applications&format=pdf" target="_blank" class="btn-sm" style="background:#F9A825;color:#333;padding:0.35rem 0.9rem;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">🖨 PDF</a>
+    </div>
     <?php endif; ?>
   </div>
 

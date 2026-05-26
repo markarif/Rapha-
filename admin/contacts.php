@@ -35,7 +35,11 @@ $flash    = flashGet();
 <main class="admin-main">
   <div class="admin-topbar">
     <h1 style="font-size:1.25rem;color:var(--green-900);">📩 Contact Messages</h1>
-    <span style="color:var(--gray-600);font-size:0.88rem;"><?= count($messages) ?> total</span>
+    <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;">
+      <span style="color:var(--gray-600);font-size:0.88rem;"><?= count($messages) ?> total</span>
+      <a href="/admin/export.php?type=contacts&format=csv" class="btn-sm" style="background:#2e7d32;color:#fff;padding:0.35rem 0.9rem;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">⬇ CSV</a>
+      <a href="/admin/export.php?type=contacts&format=pdf" target="_blank" class="btn-sm" style="background:#F9A825;color:#333;padding:0.35rem 0.9rem;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">🖨 PDF</a>
+    </div>
   </div>
 
   <?php if ($flash): ?>

@@ -72,7 +72,11 @@ $terms  = ['Term 1','Term 2','Term 3'];
   <div class="admin-topbar">
     <h1 style="font-size:1.25rem;color:var(--green-900);">💰 Fee Structure</h1>
     <?php if ($action !== 'new'): ?>
-    <a href="?action=new" class="btn-primary btn-sm">+ Add Fee Record</a>
+    <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;">
+      <a href="?action=new" class="btn-primary btn-sm">+ Add Fee Record</a>
+      <a href="/admin/export.php?type=fees&format=csv" class="btn-sm" style="background:#2e7d32;color:#fff;padding:0.35rem 0.9rem;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">⬇ CSV</a>
+      <a href="/admin/export.php?type=fees&format=pdf" target="_blank" class="btn-sm" style="background:#F9A825;color:#333;padding:0.35rem 0.9rem;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">🖨 PDF</a>
+    </div>
     <?php else: ?>
     <a href="/admin/fees.php" style="color:var(--gray-600);font-size:0.88rem;">← Back to list</a>
     <?php endif; ?>

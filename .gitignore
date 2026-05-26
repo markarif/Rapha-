@@ -11,6 +11,7 @@ uploads/forms/*
 
 # Temporary files
 reset_admin.php
+db_test.php
 *.log
 .DS_Store
 Thumbs.db
