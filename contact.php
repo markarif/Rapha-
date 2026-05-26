@@ -18,9 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$message) $errors[] = 'Message is required.';
 
     if (!$errors) {
-        $stmt = $pdo->prepare("INSERT INTO contacts (name, email, phone, subject, message, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->execute([$name, $email, $phone, $subject, $message]);
-        $flash = ['type' => 'success', 'message' => '✅ Thank you, ' . htmlspecialchars($name) . '! Your message has been received. We will get back to you shortly.'];
+        if (!$pdo) {
+            $flash = ['type' => 'error', 'message' => 'Could not save your message due to a database error. Please call us directly on ' . SITE_PHONE];
+        } else {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO contacts (name, email, phone, subject, message, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+                $stmt->execute([$name, $email, $phone, $subject, $message]);
+                $flash = ['type' => 'success', 'message' => 'Thank you, ' . htmlspecialchars($name) . '! Your message has been received. We will get back to you shortly.'];
+            } catch (Exception $e) {
+                error_log("Contact insert failed: " . $e->getMessage());
+                $flash = ['type' => 'error', 'message' => 'Could not save your message. Please call us on ' . SITE_PHONE . ' or email ' . SITE_EMAIL];
+            }
+        }
     } else {
         $flash = ['type' => 'error', 'message' => implode(' ', $errors)];
     }
@@ -87,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="flash flash-<?= $flash['type'] ?>"><?= $flash['message'] ?></div>
         <?php endif; ?>
 
-        <form method="POST" action="/contact">
+        <form method="POST" action="contact.php">
           <div class="grid-2" style="gap:1rem;">
             <div class="form-group">
               <label for="name">Full Name *</label>
